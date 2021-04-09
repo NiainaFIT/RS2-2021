@@ -1,4 +1,5 @@
 ﻿using eProdaja.Database;
+using eProdaja.Filters;
 using eProdaja.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,13 +29,17 @@ namespace eProdaja
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllers(x=> {
+                x.Filters.Add<ErrorFilter>();
+            });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
             services.AddDbContext<eProdajaContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IProizvodService, ProizvodService>();
+            services.AddScoped<IKorisniciService, KorisniciService>();
             //AddTransient svaki resolve kroz konstruktor dobija novu instancu
             //AddSingleton znači dok je živa aplikacija servis će se pozivati 
             //AddScopped dok je http request živ
