@@ -30,9 +30,10 @@ namespace eProdaja
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
-            services.AddTransient<IProizvodService, ProizvodService>();
-            //AddTransient znači da instanca servisa živi dok traje request u browseru
+            services.AddScoped<IProizvodService, ProizvodService>();
+            //AddTransient svaki resolve kroz konstruktor dobija novu instancu
             //AddSingleton znači dok je živa aplikacija servis će se pozivati 
+            //AddScopped dok je http request živ
 
         }
 
