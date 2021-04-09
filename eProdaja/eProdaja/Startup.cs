@@ -1,8 +1,10 @@
-﻿using eProdaja.Services;
+﻿using eProdaja.Database;
+using eProdaja.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +32,8 @@ namespace eProdaja
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
+            services.AddDbContext<eProdajaContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IProizvodService, ProizvodService>();
             //AddTransient svaki resolve kroz konstruktor dobija novu instancu
             //AddSingleton znači dok je živa aplikacija servis će se pozivati 
