@@ -40,6 +40,9 @@ namespace eProdaja
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IProizvodService, ProizvodService>();
             services.AddScoped<IKorisniciService, KorisniciService>();
+            services.AddScoped<IJediniceMjereService, JediniceMjereService>();
+            services.AddScoped<IVrsteProizvodaService, VrsteProizvodaService>();
+            services.AddScoped<IProizvodiService, ProizvodiService>();
             //AddTransient svaki resolve kroz konstruktor dobija novu instancu
             //AddSingleton znači dok je živa aplikacija servis će se pozivati 
             //AddScopped dok je http request živ

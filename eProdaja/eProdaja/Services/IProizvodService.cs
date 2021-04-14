@@ -1,4 +1,5 @@
 ﻿using eProdaja.Controllers;
+using eProdaja.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

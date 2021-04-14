@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace eProdaja.Services
 {
-    public interface IKorisniciService
-    {
-        List<KorisniciDto> Get();
-        KorisniciDto Insert(KorisniciInsertRequest request);
+    public interface IKorisniciService:ICRUDService<KorisniciDto,KorisniciSearchObject,KorisniciInsertRequestDto,KorisniciUpdateRequestDto>
+    {  
     }
 }
