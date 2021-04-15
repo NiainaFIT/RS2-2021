@@ -16,8 +16,7 @@ namespace eProdaja.Controllers
             _crudService = crudService;
         }
 
-        [HttpPost]
-         
+        [HttpPost]  
         public T Insert([FromBody] TInsert request)
         {
             return _crudService.Insert(request);

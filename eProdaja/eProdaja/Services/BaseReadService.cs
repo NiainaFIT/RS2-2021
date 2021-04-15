@@ -18,7 +18,7 @@ namespace eProdaja.Services
             Context = context;
             _mapper = mapper;
         }
-        public virtual IEnumerable<T> Get(TSearch search = null)
+        public virtual IEnumerable<T> GetAll(TSearch search = null)
         {
             var entity = Context.Set<TDb>();
             var list = entity.ToList();

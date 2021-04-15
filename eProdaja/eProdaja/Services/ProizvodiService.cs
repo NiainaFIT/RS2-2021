@@ -17,7 +17,7 @@ namespace eProdaja.Services
         {
         }
 
-        public override IEnumerable<ProizvodiDto> Get(ProizvodiSearchObject search = null)
+        public override IEnumerable<ProizvodiDto> GetAll(ProizvodiSearchObject search = null)
         {
             var entity = Context.Set<Proizvodi>().AsQueryable();
             if (!string.IsNullOrWhiteSpace(search?.Naziv))

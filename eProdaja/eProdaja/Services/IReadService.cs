@@ -12,7 +12,7 @@ namespace eProdaja.Services
         //public IEnumerable<Proizvod> Get();
         //public Proizvod GetById(int id);
        
-        public IEnumerable<T> Get(TSearch search = null);
+        public IEnumerable<T> GetAll(TSearch search = null);
         public T GetById(int id);
         //public T Insert(T proizvod);
         //public T Update(int id, T proizvod);

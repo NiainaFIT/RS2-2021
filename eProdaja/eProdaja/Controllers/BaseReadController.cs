@@ -19,7 +19,7 @@ namespace eProdaja.Controllers
         [HttpGet]
         public virtual IEnumerable<T> Get([FromQuery]TSearch search)
         {
-            return _readService.Get(search);
+            return _readService.GetAll(search);
         }
         [HttpGet("{id}")]
         public virtual T GetById(int id)

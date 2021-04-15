@@ -12,8 +12,17 @@ using System.Threading.Tasks;
 
 namespace eProdaja.Services
 {
-    public class KorisniciService : BaseCRUDService<KorisniciDto, Korisnici, KorisniciSearchObject, KorisniciInsertRequestDto, KorisniciUpdateRequestDto>, IKorisniciService
+    public class KorisniciService : IKorisniciService
     {
+        public eProdajaContext Context { get; set; }
+        protected readonly IMapper _mapper;
+
+        public KorisniciService(eProdajaContext context, IMapper mapper)
+        {
+            Context = context;
+            _mapper = mapper;
+        }
+
         //public List<KorisniciDto> Get()
         //{
         //    return Context.Korisnicis.ToList().Select(x=>_mapper.Map<KorisniciDto>(x)).ToList();
@@ -36,34 +45,32 @@ namespace eProdaja.Services
         ////        Telefon=entity.Telefon
         ////    };
         ////}
-        public KorisniciService(eProdajaContext context, IMapper mapper) : base(context, mapper)
-        {
-        }
 
-        public override IEnumerable<KorisniciDto> Get(KorisniciSearchObject search = null)
+        public IList<KorisniciDto> GetAll(KorisniciSearchObject search = null)
         {
-            var entity = Context.Set<Korisnici>().AsQueryable();
+            var query = Context.Set<Korisnici>().AsQueryable();
             if(!string.IsNullOrWhiteSpace(search?.Ime) || !string.IsNullOrWhiteSpace(search?.Prezime))
             {
-                entity = entity.Where(x => x.Ime.Contains(search.Ime) || x.Prezime.Contains(search.Prezime));
+                query = query.Where(x => x.Ime.Contains(search.Ime) || x.Prezime.Contains(search.Prezime));
             }
             if (!string.IsNullOrWhiteSpace(search.Email))
             {
-                entity = entity.Where(x => x.Email.Contains(search.Email));
+                query = query.Where(x => x.Email.Contains(search.Email));
             }
            
             if (search.IncludeList?.Length > 0)
             {
                 foreach (var item in search.IncludeList)
                 {
-                    entity = entity.Include(item);
+                    query = query.Include(item);
                 }
             }
-            var list = entity.ToList();
-            return _mapper.Map<List<KorisniciDto>>(list);
+            var entities = query.ToList();
+            var result = _mapper.Map<List<KorisniciDto>>(entities);
+            return result;
         }
 
-        public override KorisniciDto Insert(KorisniciInsertRequestDto request)
+        public KorisniciDto Insert(KorisniciInsertRequestDto request)
         {
             
             var entity = _mapper.Map<Korisnici>(request);
@@ -92,8 +99,17 @@ namespace eProdaja.Services
             return _mapper.Map<KorisniciDto>(entity);
         }
 
-        public KorisniciDto Update (int id,KorisniciUpdateRequestDto request)
+       
+        public KorisniciDto GetById(int id)
         {
+            var entity = Context.Korisnicis.Find(id);
+
+            return _mapper.Map<KorisniciDto>(entity);
+        }
+
+        public KorisniciDto Update(int id, KorisniciInsertRequestDto request)
+        {
+
             var entity = Context.Korisnicis.Find(id);
             _mapper.Map(request, entity);
 

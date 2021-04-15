@@ -10,12 +10,24 @@ using System.Threading.Tasks;
 
 namespace eProdaja.Controllers
 {
-    public class KorisniciController : BaseCRUDController<KorisniciDto, KorisniciSearchObject, KorisniciInsertRequestDto, KorisniciUpdateRequestDto>
+    [ApiController]
+    [Route("api/[controller]")]
+    public class KorisniciController : ControllerBase
     {
+        private IKorisniciService _korisniciService;
         public KorisniciController(IKorisniciService korisniciService)
-            :base(korisniciService)
         {
-
+            _korisniciService = korisniciService;
         }
+        [HttpGet]
+        public IList<KorisniciDto> GetAll([FromQuery] KorisniciSearchObject request)
+        {
+            return _korisniciService.GetAll(request);
+        }
+        //[HttpGet("{id}")]
+        //public KorisniciDto Get(int id)
+        //{
+        //    return _korisniciService.GetById(id);
+        //}
     }
 }
